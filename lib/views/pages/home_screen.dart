@@ -20,16 +20,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> getImages() async {
-    try {
-      final response = await _dioDirections.get(
-        'https://api.flickr.com/services/feeds/photos_public.gne?tags=priime&format=json&nojsoncall%20back=1',
-      );
-      response;
-      imgsjson = ImagesJson.fromJson(response.data);
-      setState(() {});
-    } catch (error) {
-      print('Error');
-    }
+    // try {
+    final response = await _dioDirections.get(
+      'https://api.flickr.com/services/feeds/photos_public.gne?tags=priime&format=json&nojsoncall%20back=1',
+    );
+    response;
+    imgsjson = ImagesJson.fromJson(response.data);
+    setState(() {});
+    // } catch (error) {
+    //   print('Error');
+    // }
   }
 
   @override
