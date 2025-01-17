@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ImagesJson? imgsjson;
+  final Dio _dioDirections = Dio();
 
   @override
   void initState() {
@@ -20,10 +21,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> getImages() async {
     try {
-      final response = await Dio()
-          .get('https://api.flickr.com/services/feeds/photos_public.gne');
+      final response = await _dioDirections.get(
+        'https://api.flickr.com/services/feeds/photos_public.gne?tags=priime&format=json&nojsoncall%20back=1',
+      );
+      response;
       imgsjson = ImagesJson.fromJson(response.data);
-      // setState(() {});
+      setState(() {});
     } catch (error) {
       print('Error');
     }
@@ -39,13 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (imgsjson != null) ...[Image.network(imgsjson!.media as String)],
             Text(imgsjson?.tags ?? 'No data'),
-            if (imgsjson != null) ...[Image.network(imgsjson!.media as String)]
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: getImages, child: const Icon(Icons.navigate_next)),
+          onPressed: getImages, child: const Icon(Icons.refresh)),
     );
   }
 }
